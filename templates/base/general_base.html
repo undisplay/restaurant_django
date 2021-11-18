@@ -1,0 +1,10 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block extra_base %}
+    {% include 'partials/navbar.html' %}
+    <div class="container-fluid">
+        {% block content %}{% endblock  %}
+    </div>
+    {% include 'partials/footer.html' %}
+{% endblock %}        
