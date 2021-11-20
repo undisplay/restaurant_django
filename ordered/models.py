@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from employe.models import *
 from drink.models import *
 from food.models import *
+from menu.models import *
 
 class Ordered(models.Model):
     employe   = models.ForeignKey(Employe, on_delete=models.CASCADE)
@@ -22,4 +23,8 @@ class WineOrderedLine(models.Model):
 
 class MealOrderedLine(models.Model):
     meal     = models.ForeignKey(Meal, on_delete=models.CASCADE)
+    quantity = models.IntegerField(_('Quantity'),help_text=_('Ex: 1'),blank=False,default=1)
+
+class MenuOrderedLine(models.Model):
+    menu     = models.ForeignKey(Menu, on_delete=models.CASCADE)
     quantity = models.IntegerField(_('Quantity'),help_text=_('Ex: 1'),blank=False,default=1)

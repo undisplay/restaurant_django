@@ -35,6 +35,10 @@ class MealOrderedLineAdmin(admin.ModelAdmin):
     list_display = ('id', 'meal', 'quantity')
     list_filter = ('meal', 'id', 'meal', 'quantity')
 
+class MenuOrderedLineAdmin(admin.ModelAdmin):
+
+    list_display = ('id', 'menu', 'quantity')
+    list_filter = ('menu', 'id', 'menu', 'quantity')
 
 def _register(model, admin_class):
     admin.site.register(model, admin_class)
@@ -44,3 +48,4 @@ _register(models.Ordered, OrderedAdmin)
 _register(models.DrinkOrderedLine, DrinkOrderedLineAdmin)
 _register(models.WineOrderedLine, WineOrderedLineAdmin)
 _register(models.MealOrderedLine, MealOrderedLineAdmin)
+_register(models.MenuOrderedLine, MenuOrderedLineAdmin)
