@@ -5,8 +5,8 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 
 class Winegrower(models.Model):
-    first_name  = AbstractUser.first_name
-    last_name   = AbstractUser.first_name
+    first_name  = models.CharField(_('Firstname'),help_text='Ex:john', max_length=150, null=True,blank=False)
+    last_name   = models.CharField(_('Lastname'),help_text='Ex:snow', max_length=150, null=True,blank=False)
     phone       = PhoneNumberField(_('Phone'),help_text='Ex:+509XXXXXXXX',blank=True,max_length=15)
     address     = models.TextField(_('Address'),help_text=_('Entrer address'),blank=True,null=True)
 
