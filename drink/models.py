@@ -10,6 +10,9 @@ class Winegrower(models.Model):
     phone       = PhoneNumberField(_('Phone'),help_text='Ex:+509XXXXXXXX',blank=True,max_length=15)
     address     = models.TextField(_('Address'),help_text=_('Entrer address'),blank=True,null=True)
 
+    def __str__(self):
+        return 'Firstname:%s Lastname:%s' % (self.first_name,self.last_name)
+
 class Wine(models.Model):
     winegrower    = models.ForeignKey(Winegrower, on_delete=models.CASCADE)
     creation_date = models.DateTimeField(_("creation date"),blank=False)
@@ -19,8 +22,14 @@ class Wine(models.Model):
     type          = models.CharField(_('Type'),help_text='Ex:Rouge', max_length=150, blank=False)
     name          = models.CharField(_('Name'),help_text='Ex:Bordeaux',unique=True, max_length=150, blank=False)
 
+    def __str__(self):
+        return 'Winegrower:(%s) Name:%s' % (self.winegrower,self.name)
+
 class Drink(models.Model):
     name          = models.CharField(_('Name'),help_text='Ex:Coca',unique=True, max_length=150, blank=False)
     price         = models.DecimalField(_('Price'),help_text=_('Ex: 300'),max_length=255,max_digits=11,decimal_places=2,blank=False)
     sale_price    = models.DecimalField(_('Sale Price'),help_text=_('Ex: 30'),max_length=255,max_digits=11,decimal_places=2,blank=False)
     type          = models.CharField(_('Type'),help_text='Ex:Main', max_length=150, blank=False)
+
+def __str__(self):
+    return 'Name:%s' % (self.name)

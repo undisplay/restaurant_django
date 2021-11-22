@@ -14,22 +14,35 @@ class Ordered(models.Model):
     service   = models.CharField(_('Service'),help_text='', max_length=150, blank=False)
     table     = models.CharField(_('Table'),help_text='', max_length=150, blank=False)
 
+    def __str__(self):
+        return 'Employe:(%s) table:%s' % (self.employe,self.table)
+
 class DrinkOrderedLine(models.Model):
     ordered  = models.ForeignKey(Ordered, on_delete=models.CASCADE)
     drink    = models.ForeignKey(Drink, on_delete=models.CASCADE)
     quantity = models.IntegerField(_('Quantity'),help_text=_('Ex: 1'),blank=False,default=1)
 
+    def __str__(self):
+        return 'Ordered:(%s) Drink:(%s)' % (self.ordered,self.drink)
 class WineOrderedLine(models.Model):
     ordered  = models.ForeignKey(Ordered, on_delete=models.CASCADE)
     wine     = models.ForeignKey(Wine, on_delete=models.CASCADE)
     quantity = models.IntegerField(_('Quantity'),help_text=_('Ex: 1'),blank=False,default=1)
 
+    def __str__(self):
+        return 'Ordered:(%s) Wine:(%s)' % (self.ordered,self.wine)
 class MealOrderedLine(models.Model):
     ordered  = models.ForeignKey(Ordered, on_delete=models.CASCADE)
     meal     = models.ForeignKey(Meal, on_delete=models.CASCADE)
     quantity = models.IntegerField(_('Quantity'),help_text=_('Ex: 1'),blank=False,default=1)
 
+    def __str__(self):
+        return 'Ordered:(%s) Meal:(%s)' % (self.ordered,self.meal)
+
 class MenuOrderedLine(models.Model):
     ordered  = models.ForeignKey(Ordered, on_delete=models.CASCADE)
     menu     = models.ForeignKey(Menu, on_delete=models.CASCADE)
     quantity = models.IntegerField(_('Quantity'),help_text=_('Ex: 1'),blank=False,default=1)
+
+    def __str__(self):
+        return 'Ordered:(%s) Menu:(%s)' % (self.ordered,self.menu)
