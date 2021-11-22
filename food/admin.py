@@ -6,8 +6,8 @@ from . import models
 
 class MealAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'name', 'price', 'sale_price', 'type')
-    list_filter = ('id', 'name', 'price', 'sale_price', 'type')
+    list_display = ('id', 'name', 'sale_price', 'type')
+    list_filter = ('id', 'name', 'sale_price', 'type')
     search_fields = ('name',)
 
 

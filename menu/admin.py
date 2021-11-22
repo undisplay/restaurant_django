@@ -1,14 +1,30 @@
 # vim: set fileencoding=utf-8 :
 from django.contrib import admin
 
-from . import models
+from .models import *
 
+class MenuMealInline(admin.StackedInline):
+    model= MenuMeal
+
+
+class MenuDrinkInline(admin.StackedInline):
+    model= MenuDrink
+
+
+class MenuWineInline(admin.StackedInline):
+    model= MenuWine
 
 class MenuAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'price', 'discount')
-    list_filter = ('id', 'price', 'discount')
+    list_display = ('id', 'name', 'discount', 'total')
+    list_filter = ('id', 'name', 'discount', 'total')
+    search_fields = ('name',)
 
+    inlines = [
+        MenuWineInline,
+        MenuDrinkInline,
+        MenuMealInline,
+    ]
 
 class MenuMealAdmin(admin.ModelAdmin):
 
@@ -32,7 +48,7 @@ def _register(model, admin_class):
     admin.site.register(model, admin_class)
 
 
-_register(models.Menu, MenuAdmin)
-_register(models.MenuMeal, MenuMealAdmin)
-_register(models.MenuDrink, MenuDrinkAdmin)
-_register(models.MenuWine, MenuWineAdmin)
+_register(Menu, MenuAdmin)
+_register(MenuMeal, MenuMealAdmin)
+_register(MenuDrink, MenuDrinkAdmin)
+_register(MenuWine, MenuWineAdmin)

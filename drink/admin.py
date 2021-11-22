@@ -6,8 +6,8 @@ from . import models
 
 class WinegrowerAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'phone', 'address')
-    list_filter = ('id', 'phone', 'address')
+    list_display = ('id', 'first_name', 'last_name', 'phone', 'address')
+    list_filter = ('id', 'first_name', 'last_name', 'phone', 'address')
 
 
 class WineAdmin(admin.ModelAdmin):

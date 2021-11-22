@@ -1,51 +1,71 @@
 # vim: set fileencoding=utf-8 :
 from django.contrib import admin
 
-from . import models
+from .models import *
 
+class DrinkOrderedLineInline(admin.StackedInline):
+    model=DrinkOrderedLine
+
+class WineOrderedLineInline(admin.StackedInline):
+    model=WineOrderedLine
+
+class MealOrderedLineInline(admin.StackedInline):
+    model=MealOrderedLine
+
+class MenuOrderedLineInline(admin.StackedInline):
+    model=MenuOrderedLine
 
 class OrderedAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'employe', 'date', 'service', 'table')
+    list_display = ('id', 'employe', 'total', 'date', 'service', 'table')
     list_filter = (
         'employe',
         'date',
         'id',
         'employe',
+        'total',
         'date',
         'service',
         'table',
     )
 
+    inlines=[
+        MenuOrderedLineInline,
+        DrinkOrderedLineInline,
+        WineOrderedLineInline,
+        MealOrderedLineInline,
+    ]
 
 class DrinkOrderedLineAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'drink', 'quantity')
-    list_filter = ('drink', 'id', 'drink', 'quantity')
+    list_display = ('id', 'ordered', 'drink', 'quantity')
+    list_filter = ('ordered', 'drink', 'id', 'ordered', 'drink', 'quantity')
 
 
 class WineOrderedLineAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'wine', 'quantity')
-    list_filter = ('wine', 'id', 'wine', 'quantity')
+    list_display = ('id', 'ordered', 'wine', 'quantity')
+    list_filter = ('ordered', 'wine', 'id', 'ordered', 'wine', 'quantity')
 
 
 class MealOrderedLineAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'meal', 'quantity')
-    list_filter = ('meal', 'id', 'meal', 'quantity')
+    list_display = ('id', 'ordered', 'meal', 'quantity')
+    list_filter = ('ordered', 'meal', 'id', 'ordered', 'meal', 'quantity')
+
 
 class MenuOrderedLineAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'menu', 'quantity')
-    list_filter = ('menu', 'id', 'menu', 'quantity')
+    list_display = ('id', 'ordered', 'menu', 'quantity')
+    list_filter = ('ordered', 'menu', 'id', 'ordered', 'menu', 'quantity')
+
 
 def _register(model, admin_class):
     admin.site.register(model, admin_class)
 
 
-_register(models.Ordered, OrderedAdmin)
-_register(models.DrinkOrderedLine, DrinkOrderedLineAdmin)
-_register(models.WineOrderedLine, WineOrderedLineAdmin)
-_register(models.MealOrderedLine, MealOrderedLineAdmin)
-_register(models.MenuOrderedLine, MenuOrderedLineAdmin)
+_register(Ordered, OrderedAdmin)
+_register(DrinkOrderedLine, DrinkOrderedLineAdmin)
+_register(WineOrderedLine, WineOrderedLineAdmin)
+_register(MealOrderedLine, MealOrderedLineAdmin)
+_register(MenuOrderedLine, MenuOrderedLineAdmin)
