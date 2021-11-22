@@ -8,7 +8,6 @@ class EmployeAdmin(admin.ModelAdmin):
 
     list_display = (
         'id',
-        'password',
         'last_login',
         'is_superuser',
         'username',
@@ -28,7 +27,6 @@ class EmployeAdmin(admin.ModelAdmin):
         'is_active',
         'date_joined',
         'id',
-        'password',
         'last_login',
         'is_superuser',
         'username',
