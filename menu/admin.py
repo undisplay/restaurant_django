@@ -11,17 +11,13 @@ class MenuDrinkInline(admin.StackedInline):
     model= MenuDrink
 
 
-class MenuWineInline(admin.StackedInline):
-    model= MenuWine
-
 class MenuAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'name', 'discount', 'total')
-    list_filter = ('id', 'name', 'discount', 'total')
+    list_display = ('id', 'name', 'discount',)
+    list_filter = ('id', 'name', 'discount',)
     search_fields = ('name',)
 
     inlines = [
-        MenuWineInline,
         MenuDrinkInline,
         MenuMealInline,
     ]
@@ -51,4 +47,3 @@ def _register(model, admin_class):
 _register(Menu, MenuAdmin)
 _register(MenuMeal, MenuMealAdmin)
 _register(MenuDrink, MenuDrinkAdmin)
-_register(MenuWine, MenuWineAdmin)

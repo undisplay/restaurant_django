@@ -42,15 +42,9 @@ class EmployeAdmin(admin.ModelAdmin):
     raw_id_fields = ('groups', 'user_permissions')
 
 
-class CertificateAdmin(admin.ModelAdmin):
-
-    list_display = ('id', 'employe', 'certificate')
-    list_filter = ('employe', 'id', 'employe', 'certificate')
-
 
 def _register(model, admin_class):
     admin.site.register(model, admin_class)
 
 
 _register(models.Employe, EmployeAdmin)
-_register(models.Certificate, CertificateAdmin)

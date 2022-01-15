@@ -6,14 +6,15 @@ from .models import *
 class DrinkOrderedLineInline(admin.StackedInline):
     model=DrinkOrderedLine
 
-class WineOrderedLineInline(admin.StackedInline):
-    model=WineOrderedLine
 
 class MealOrderedLineInline(admin.StackedInline):
     model=MealOrderedLine
 
 class MenuOrderedLineInline(admin.StackedInline):
     model=MenuOrderedLine
+    
+class WashOrderedLineInline(admin.StackedInline):
+    model=WashOrderedLine
 
 class OrderedAdmin(admin.ModelAdmin):
 
@@ -32,8 +33,8 @@ class OrderedAdmin(admin.ModelAdmin):
     inlines=[
         MenuOrderedLineInline,
         DrinkOrderedLineInline,
-        WineOrderedLineInline,
         MealOrderedLineInline,
+        WashOrderedLineInline,
     ]
 
 class DrinkOrderedLineAdmin(admin.ModelAdmin):
@@ -65,7 +66,3 @@ def _register(model, admin_class):
 
 
 _register(Ordered, OrderedAdmin)
-_register(DrinkOrderedLine, DrinkOrderedLineAdmin)
-_register(WineOrderedLine, WineOrderedLineAdmin)
-_register(MealOrderedLine, MealOrderedLineAdmin)
-_register(MenuOrderedLine, MenuOrderedLineAdmin)

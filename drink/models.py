@@ -1,35 +1,20 @@
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
-from django.contrib.auth.models import AbstractUser 
 
 from django.utils.translation import gettext_lazy as _
 
-class Winegrower(models.Model):
-    first_name  = models.CharField(_('Firstname'),help_text='Ex:john', max_length=150, null=True,blank=False)
-    last_name   = models.CharField(_('Lastname'),help_text='Ex:snow', max_length=150, null=True,blank=False)
-    phone       = PhoneNumberField(_('Phone'),help_text='Ex:+509XXXXXXXX',blank=True,max_length=15)
-    address     = models.TextField(_('Address'),help_text=_('Entrer address'),blank=True,null=True)
+from conf.mixins import TimeStampMixin,MediaMixin
 
-    def __str__(self):
-        return 'Firstname:%s Lastname:%s' % (self.first_name,self.last_name)
-
-class Wine(models.Model):
-    winegrower    = models.ForeignKey(Winegrower, on_delete=models.CASCADE)
-    creation_date = models.DateTimeField(_("creation date"),blank=False)
-    price         = models.DecimalField(_('Price'),help_text=_('Ex: 300'),max_length=255,max_digits=11,decimal_places=2,blank=False)
-    sale_price    = models.DecimalField(_('Sale Price'),help_text=_('Ex: 30'),max_length=255,max_digits=11,decimal_places=2,blank=False)
-    buy_date      = models.DateTimeField(_("Buy date"),blank=False)
-    type          = models.CharField(_('Type'),help_text='Ex:Rouge', max_length=150, blank=False)
-    name          = models.CharField(_('Name'),help_text='Ex:Bordeaux',unique=True, max_length=150, blank=False)
-
-    def __str__(self):
-        return 'Winegrower:(%s) Name:%s' % (self.winegrower,self.name)
-
-class Drink(models.Model):
+class Drink(TimeStampMixin,MediaMixin,models.Model):
+    class Types(models.TextChoices):
+        SOFT    = 'SOFT', _("SOFT")
+        BEER    = 'BEER', _("BEER")
+        LIQUOR  = 'LIQUOR', _("LIQUOR")
+    
     name          = models.CharField(_('Name'),help_text='Ex:Coca',unique=True, max_length=150, blank=False)
     price         = models.DecimalField(_('Price'),help_text=_('Ex: 300'),max_length=255,max_digits=11,decimal_places=2,blank=False)
     sale_price    = models.DecimalField(_('Sale Price'),help_text=_('Ex: 30'),max_length=255,max_digits=11,decimal_places=2,blank=False)
-    type          = models.CharField(_('Type'),help_text='Ex:Main', max_length=150, blank=False)
-
+    sale_price_ml = models.DecimalField(_('Sale Price(ml)'),help_text=_('Ex: 5'),max_length=255,max_digits=11,decimal_places=2,blank=True,null=True)
+    type          = models.CharField(_('Type'),help_text='Ex:Soft drink',max_length=25,choices=Types.choices,default=Types.SOFT,blank=False)
+    
     def __str__(self):
-        return 'Name:%s' % (self.name)
+        return 'Name:%s Type:%s' % (self.name,self.type)

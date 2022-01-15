@@ -1,18 +1,18 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from drink.models import Drink
-from drink.serializers import DrinkSerializer
+from wash.models import Wash
+from wash.serializers import WashSerializer
 
 
 @api_view(['GET', 'POST'])
-def drink_list(request):
+def wash_list(request):
     if request.method == 'GET':
-        items = Drink.objects.order_by('pk')
-        serializer = DrinkSerializer(items, many=True)
+        items = Wash.objects.order_by('pk')
+        serializer = WashSerializer(items, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = DrinkSerializer(data=request.data)
+        serializer = WashSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)
@@ -20,18 +20,18 @@ def drink_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def drink_detail(request, pk):
+def wash_detail(request, pk):
     try:
-        item = Drink.objects.get(pk=pk)
-    except Drink.DoesNotExist:
+        item = Wash.objects.get(pk=pk)
+    except Wash.DoesNotExist:
         return Response(status=404)
 
     if request.method == 'GET':
-        serializer = DrinkSerializer(item)
+        serializer = WashSerializer(item)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = DrinkSerializer(item, data=request.data)
+        serializer = WashSerializer(item, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

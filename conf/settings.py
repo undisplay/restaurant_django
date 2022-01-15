@@ -47,7 +47,16 @@ INSTALLED_APPS = [
     'food',
     'menu',
     'ordered',
+    'wash',
+    
+    'rest_framework',
+    'drf_generators',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 15
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

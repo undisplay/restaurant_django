@@ -1,0 +1,177 @@
+{% extends 'base/general_base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<main classe="col-12">
+    <ul class="nav nav-tabs nav-stacked bg-secondary">
+        <li class="nav-item">
+            <a href="#" class="nav-link active">John Doe</a>
+        </li>
+        <li class="nav-item" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+            <a href="#" class="nav-link text-white">New</a>
+        </li>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h6 class="modal-title" id="exampleModalLabel">
+                    Client
+                </h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                      <label for="">Name:</label>
+                      <input type="text"
+                        class="form-control" name="" id="" aria-describedby="helpId" placeholder="EX: John Doe">
+                      <small id="helpId" class="form-text text-muted">Name of the client</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </ul>
+    <div class="p-2 col-12 row m-auto">
+        <div class="row col-md-7 m-auto p-0">
+          <div class="col-xs-1-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Drink</h5>
+                </div>
+                <div class="card-body">
+                    <div class="card-group">
+                        <div class="card">
+                            <div data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <img class="card-img-top" src="{% static 'image/beer.jpeg' %}" alt="Card image cap">
+                                <div class="card-body">
+                                    <h6 class="card-title">Prestige</h6>
+                                    <p class="card-text">200 gourdes</p>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h6 class="modal-title" id="exampleModalLabel">
+                                        Prestige
+                                    </h6>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                          <label for="">Quantity:</label>
+                                          <input type="text"
+                                            class="form-control" name="" id="" aria-describedby="helpId" placeholder="EX: 1">
+                                          <small id="helpId" class="form-text text-muted">First commande quantity</small>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img class="card-img-top" src="{% static 'image/heineken.jpg' %}" alt="Card image cap">
+                            <div class="card-body">
+                                <h6 class="card-title">Heineken</h6>
+                                <p class="card-text">200 gourdes</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img class="card-img-top" src="{% static 'image/beer.jpeg' %}" alt="Card image cap">
+                            <div class="card-body">
+                                <h6 class="card-title">Prestige</h6>
+                                <p class="card-text">200 gourdes</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title">Miks</h6>
+                                <p class="card-text">200 gourdes</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img class="card-img-top" src="{% static 'image/heineken.jpg' %}" alt="Card image cap">
+                            <div class="card-body">
+                                <h6 class="card-title">Heineken</h6>
+                                <p class="card-text">200 gourdes</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img class="card-img-top" src="{% static 'image/beer.jpeg' %}" alt="Card image cap">
+                            <div class="card-body">
+                                <h6 class="card-title">Prestige</h6>
+                                <p class="card-text">200 gourdes</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title">Miks</h6>
+                                <p class="card-text">200 gourdes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-5">
+            <div class="col-xs-1-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <h5>Invoice</h5>
+                        <button type="button" class="btn btn-primary">Print</button>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Article</th>
+                                    <th>
+                                        Quantity
+                                    </th>
+                                    <th>Price(gourdes)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Coca</td>
+                                    <td>
+                                        2
+                                    </td>
+                                    <td>60</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <h6>Total:</h6>
+                                    </td>
+                                    <td>
+                                        200 gourdes
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+{% endblock content %}
