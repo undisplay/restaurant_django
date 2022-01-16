@@ -18,16 +18,10 @@ class WashOrderedLineInline(admin.StackedInline):
 
 class OrderedAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'employe', 'total', 'date', 'service', 'table')
+    list_display = ('id', 'employe', 'client')
     list_filter = (
         'employe',
-        'date',
-        'id',
-        'employe',
-        'total',
-        'date',
-        'service',
-        'table',
+        'client',
     )
 
     inlines=[

@@ -12,13 +12,10 @@ from wash.models import *
 
 class Ordered(TimeStampMixin,MediaMixin,models.Model):
     employe   = models.ForeignKey(Employe, on_delete=models.CASCADE)
-    total     = models.DecimalField(_('Total'),help_text=_('Ex: 30'),max_length=255,max_digits=11,decimal_places=2,blank=False)
-    date      = models.DateField(_("Date"), auto_now_add=True)
-    service   = models.CharField(_('Service'),help_text='', max_length=150, blank=False)
-    table     = models.CharField(_('Table'),help_text='', max_length=150, blank=False)
+    client    = models.CharField(_('Client Name'),help_text=_('Ex: John Doe'), max_length=150, blank=False)
 
     def __str__(self):
-        return 'Employe:(%s) table:%s' % (self.employe,self.table)
+        return 'Employe:(%s) Client:%s' % (self.employe,self.client)
 
 class DrinkOrderedLine(TimeStampMixin,MediaMixin,models.Model):
     ordered  = models.ForeignKey(Ordered, on_delete=models.CASCADE)
