@@ -4,15 +4,27 @@
 
 {% block content %}
 <main classe="col-12">
-    <ul class="nav nav-tabs nav-stacked bg-secondary">
-        <li class="nav-item">
-            <a href="#" class="nav-link active">John Doe</a>
+    <ul class="nav nav-tabs nav-stacked sticky-top" style="background-color:#ddd;">
+        <!-- Ordereds Tab -->
+        {% for ordered in ordereds %}
+            <li class="nav-item">
+                <button 
+                    class="nav-link {% if ordered.id == ordereds.0.id %} active {% endif %}" 
+                    data-bs-toggle="tab"
+                    data-bs-target="#nav-{{ordered.id}}"
+                    role="tab" 
+                >
+                    {{ordered.client}}
+                </button>
+            </li>
+        {% endfor %}
+        <!-- Add Ordered -->
+        <li class="nav-item" data-bs-toggle="modal" data-bs-target="#addClientForm">
+            <a href="#" class="nav-link">+ New</a>
         </li>
-        <li class="nav-item" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-            <a href="#" class="nav-link text-white">New</a>
-        </li>
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" aria-hidden="true">
+        <!-- Modal Add Ordered -->
+        <form method="POST" class="modal fade" id="addClientForm" tabindex="-1" data-bs-backdrop="static" aria-hidden="true">
+            {% csrf_token %}
             <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -23,155 +35,253 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                      <label for="">Name:</label>
-                      <input type="text"
-                        class="form-control" name="" id="" aria-describedby="helpId" placeholder="EX: John Doe">
-                      <small id="helpId" class="form-text text-muted">Name of the client</small>
+                    <label for="">Name:</label>
+                    <input type="text" required class="form-control" name="client" id="" aria-describedby="helpId" placeholder="EX: John Doe">
+                    <small id="helpId" class="form-text text-muted">Name of the client</small>
                     </div>
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <input type="submit" class="btn btn-primary" value="Add" />
                 </div>
             </div>
             </div>
-        </div>
+        </form>
     </ul>
     <div class="p-2 col-12 row m-auto">
-        <div class="row col-md-7 m-auto p-0">
-          <div class="col-xs-1-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Drink</h5>
-                </div>
-                <div class="card-body">
-                    <div class="card-group">
-                        <div class="card">
-                            <div data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                <img class="card-img-top" src="{% static 'image/beer.jpeg' %}" alt="Card image cap">
-                                <div class="card-body">
-                                    <h6 class="card-title">Prestige</h6>
-                                    <p class="card-text">200 gourdes</p>
-                                </div>
-                            </div>
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" data-bs-backdrop="static" aria-hidden="true">
-                                <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                    <h6 class="modal-title" id="exampleModalLabel">
-                                        Prestige
-                                    </h6>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- Ordereds -->
+        <div class="tab-content col-12" id="nav-tabContent">
+            {% for ordered in ordereds %}
+                <div class="tab-pane fade {% if ordered.id == ordereds.0.id %} show active {% endif %}" id="nav-{{ordered.id}}" role="tabpanel">
+                    <div class="row">
+                        <div class="row col-12 col-md-7 m-auto mt-0 p-0">
+                            <div class="col-xs-1-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Drink</h5>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                          <label for="">Quantity:</label>
-                                          <input type="text"
-                                            class="form-control" name="" id="" aria-describedby="helpId" placeholder="EX: 1">
-                                          <small id="helpId" class="form-text text-muted">First commande quantity</small>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            {% for drink in drinks %}
+                                                <div class="col-md-2">
+                                                    <div class="card">
+                                                        <div data-bs-toggle="modal" data-bs-target="#drink-{{drink.id}}">
+                                                            {% if drink.image %}<img class="card-img-top"  src="{{drink.image.url}}" alt="{{drink.name}}">{% endif %}
+                                                            <div class="card-body">
+                                                                <h6 class="card-title">{{drink.name}}</h6>
+                                                                <p class="card-text">{{drink.sale_price}} gourdes</p>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Modal -->
+                                                        <form method="POST" action="{% url 'sale_line' %}" class="modal fade" id="drink-{{drink.id}}" tabindex="-1"  data-bs-backdrop="static" aria-hidden="true">
+                                                            {% csrf_token %}
+                                                            <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                <h6 class="modal-title" id="exampleModalLabel">
+                                                                    {{drink.name}}
+                                                                </h6>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <input type="hidden" name="ordered_id" value="{{ordered.id}}" />
+                                                                    <input type="hidden" name="id" value="{{drink.id}}" />
+                                                                    <input type="hidden" name="product" value="drink" />
+                                                                    <div class="form-group">
+                                                                    <label for="">Quantity:</label>
+                                                                    <input type="text"
+                                                                        class="form-control" name="quantity" id="" aria-describedby="helpId" placeholder="EX: 1">
+                                                                    <small id="helpId" class="form-text text-muted">Commande quantity</small>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <input type="submit" class="btn btn-primary" value="Buy" />
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
-                                    <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                            <div class="col-xs-1-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Meal</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            {% for meal in meals %}
+                                                <div class="col-md-2">
+                                                    <div class="card">
+                                                        <div data-bs-toggle="modal" data-bs-target="#meal-{{meal.id}}">
+                                                            {% if meal.image %}<img class="card-img-top"  src="{{meal.image.url}}" alt="{{meal.name}}">{% endif %}
+                                                            <div class="card-body">
+                                                                <h6 class="card-title">{{meal.name}}</h6>
+                                                                <p class="card-text">{{meal.sale_price}} gourdes</p>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Modal -->
+                                                        <form method="POST" action="{% url 'sale_line' %}" class="modal fade" id="meal-{{meal.id}}" tabindex="-1"  data-bs-backdrop="static" aria-hidden="true">
+                                                            {% csrf_token %}
+                                                            <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                <h6 class="modal-title" id="exampleModalLabel">
+                                                                    {{meal.name}}
+                                                                </h6>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <input type="hidden" name="ordered_id" value="{{ordered.id}}" />
+                                                                    <input type="hidden" name="id" value="{{meal.id}}" />
+                                                                    <input type="hidden" name="product" value="meal" />
+                                                                    <div class="form-group">
+                                                                    <label for="">Quantity:</label>
+                                                                    <input type="text"
+                                                                        class="form-control" name="quantity" id="" aria-describedby="helpId" placeholder="EX: 1">
+                                                                    <small id="helpId" class="form-text text-muted">Commande quantity</small>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <input type="submit" class="btn btn-primary" value="Buy" />
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-xs-1-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Wash</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            {% for wash in washes %}
+                                                <div class="col-md-2">
+                                                    <div class="card">
+                                                        <div data-bs-toggle="modal" data-bs-target="#wash-{{wash.id}}">
+                                                            {% if wash.image %}<img class="card-img-top"  src="{{wash.image.url}}" alt="{{wash.type}}">{% endif %}
+                                                            <div class="card-body">
+                                                                <h6 class="card-title">{{wash.type}}</h6>
+                                                                <p class="card-text">{{wash.wash_price}} gourdes</p>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Modal -->
+                                                        <form method="POST" action="{% url 'sale_line' %}" class="modal fade" id="wash-{{wash.id}}" tabindex="-1"  data-bs-backdrop="static" aria-hidden="true">
+                                                            {% csrf_token %}
+                                                            <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                <h6 class="modal-title" id="exampleModalLabel">
+                                                                    {{wash.name}}
+                                                                </h6>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <input type="hidden" name="ordered_id" value="{{ordered.id}}" />
+                                                                    <input type="hidden" name="id" value="{{wash.id}}" />
+                                                                    <input type="hidden" name="product" value="wash" />
+                                                                    <div class="form-group">
+                                                                    <label for="">Quantity:</label>
+                                                                    <input type="text"
+                                                                        class="form-control" name="quantity" id="" aria-describedby="helpId" placeholder="EX: 1">
+                                                                    <small id="helpId" class="form-text text-muted">Commande quantity</small>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <input type="submit" class="btn btn-primary" value="Buy" />
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
-                            <img class="card-img-top" src="{% static 'image/heineken.jpg' %}" alt="Card image cap">
-                            <div class="card-body">
-                                <h6 class="card-title">Heineken</h6>
-                                <p class="card-text">200 gourdes</p>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top" src="{% static 'image/beer.jpeg' %}" alt="Card image cap">
-                            <div class="card-body">
-                                <h6 class="card-title">Prestige</h6>
-                                <p class="card-text">200 gourdes</p>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="card-title">Miks</h6>
-                                <p class="card-text">200 gourdes</p>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top" src="{% static 'image/heineken.jpg' %}" alt="Card image cap">
-                            <div class="card-body">
-                                <h6 class="card-title">Heineken</h6>
-                                <p class="card-text">200 gourdes</p>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top" src="{% static 'image/beer.jpeg' %}" alt="Card image cap">
-                            <div class="card-body">
-                                <h6 class="card-title">Prestige</h6>
-                                <p class="card-text">200 gourdes</p>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <h6 class="card-title">Miks</h6>
-                                <p class="card-text">200 gourdes</p>
+                        <!-- Invoice -->
+                        <div class="col-12 col-md-5 m-auto mt-0 sticky-top">
+                            <div class="col-xs-1-12">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between">
+                                        <h5>Invoice</h5>
+                                        <button type="button" class="btn btn-primary">Print</button>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Article</th>
+                                                    <th>Unit Price(gourdes)</th>
+                                                    <th>Quantity</th>
+                                                    <th>Total Price(gourdes)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for dinkLine in ordered.drinkorderedline_set.all %}
+                                                    <tr>
+                                                        <td>{{dinkLine.drink.name}}</td>
+                                                        <td>{{dinkLine.drink.sale_price}}</td>
+                                                        <td>{{dinkLine.quantity}}</td>
+                                                        <td>{{dinkLine.total_price}}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                {% for mealLine in ordered.mealorderedline_set.all %}
+                                                    <tr>
+                                                        <td>{{mealLine.meal.name}}</td>
+                                                        <td>{{mealLine.meal.sale_price}}</td>
+                                                        <td>{{mealLine.quantity}}</td>
+                                                        <td>{{mealLine.total_price}}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                {% for washLine in ordered.washorderedline_set.all %}
+                                                    <tr>
+                                                        <td>{{washLine.wash.name}}</td>
+                                                        <td>{{washLine.wash.sale_price}}</td>
+                                                        <td>{{washLine.quantity}}</td>
+                                                        <td>{{washLine.total_price}}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="card-footer">
+                                        <table class="table">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <h6>Total:</h6>
+                                                    </td>
+                                                    <td>
+                                                        {{ordered.total_price}} gourdes
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-5">
-            <div class="col-xs-1-12">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between">
-                        <h5>Invoice</h5>
-                        <button type="button" class="btn btn-primary">Print</button>
-                    </div>
-                    <div class="card-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Article</th>
-                                    <th>
-                                        Quantity
-                                    </th>
-                                    <th>Price(gourdes)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Coca</td>
-                                    <td>
-                                        2
-                                    </td>
-                                    <td>60</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-footer">
-                        <table class="table">
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <h6>Total:</h6>
-                                    </td>
-                                    <td>
-                                        200 gourdes
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
-
 </main>
 {% endblock content %}
