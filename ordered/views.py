@@ -1,7 +1,8 @@
-from typing import Tuple
 from django.shortcuts import render,redirect
+from django.contrib.auth.decorators import login_required
 from .models import DrinkOrderedLine, MealOrderedLine, WashOrderedLine, Ordered,Drink,Meal,Wash
 
+@login_required()
 def sale_view(request):
     
     if request.method == "POST":
@@ -34,7 +35,8 @@ def sale_view(request):
             "drinks":drinks,
             "washes":washes
         })
-        
+  
+@login_required()       
 def sale_line(request):
     
     if request.method == "POST":
@@ -77,7 +79,7 @@ def sale_line(request):
     else:
         return redirect("sale_view")
     
-    
+@login_required()
 def sale_print(request,id):
     
     try:

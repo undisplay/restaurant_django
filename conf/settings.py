@@ -153,3 +153,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'employe.Employe'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap'
+
+LOGIN_URL='/admin/login/'
+LOGIN_REDIRECT_URL='/'
