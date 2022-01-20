@@ -6,7 +6,8 @@
         "module": "conf.wsgi:application",
         "managetasks": [
             "collectstatic --noinput",
-            "migrate --noinput"
+            "migrate --noinput",
+            "loaddata ./fixtures/user.json"
         ]
     }
 }

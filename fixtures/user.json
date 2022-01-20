@@ -1,0 +1,25 @@
+[
+{
+  "model": "employe.employe",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$260000$0JTOBJe0mm35V2V1cRT6F9$IwtVSwdQCeJEgVpSszHH0VOwPvUozFa8Z71ac1Quxx4=",
+    "last_login": "2022-01-20T03:36:46.671Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@test.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2021-11-18T04:36:56.828Z",
+    "created_at": "2022-01-15T15:28:20.958Z",
+    "updated_at": "2022-01-15T15:28:20.999Z",
+    "image": "",
+    "phone": "",
+    "address": null,
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]
