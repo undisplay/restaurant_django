@@ -1,3 +1,4 @@
+from typing import Tuple
 from django.shortcuts import render,redirect
 from .models import DrinkOrderedLine, MealOrderedLine, WashOrderedLine, Ordered,Drink,Meal,Wash
 
@@ -75,3 +76,18 @@ def sale_line(request):
         return redirect("sale_view")
     else:
         return redirect("sale_view")
+    
+    
+def sale_print(request,id):
+    
+    try:
+        ordered = Ordered.objects.get(id=id)
+    except :
+        ordered = None
+        
+    if ordered:
+        ordered.is_complete = True
+        
+        ordered.save()
+    
+    return redirect("sale_view")

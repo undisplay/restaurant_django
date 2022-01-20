@@ -1,13 +1,15 @@
 # vim: set fileencoding=utf-8 :
 from django.contrib import admin
 
+from import_export.admin import ExportActionMixin
+
 from . import models
 
 
-class MealAdmin(admin.ModelAdmin):
+class MealAdmin(ExportActionMixin,admin.ModelAdmin):
 
-    list_display = ('id', 'name', 'sale_price', 'type')
-    list_filter = ('id', 'name', 'sale_price', 'type')
+    list_display = ('id', 'name','quantity_available', 'sale_price', 'type')
+    list_filter = ('type',)
     search_fields = ('name',)
 
 

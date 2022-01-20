@@ -1,4 +1,3 @@
-from xmlrpc.client import boolean
 from django.db import models
 
 from django.utils.translation import gettext_lazy as _
@@ -45,6 +44,11 @@ class DrinkOrderedLine(TimeStampMixin,MediaMixin,models.Model):
     @property
     def total_price(self):
         return self.drink.sale_price * self.quantity
+    
+    def save(self, *args, **kwargs):
+        self.drink.quantity_available = int(self.drink.quantity_available) - int(self.quantity)
+        self.drink.save()
+        super(DrinkOrderedLine, self).save(*args, **kwargs)
         
     
 class MealOrderedLine(TimeStampMixin,MediaMixin,models.Model):
@@ -58,6 +62,11 @@ class MealOrderedLine(TimeStampMixin,MediaMixin,models.Model):
     @property
     def total_price(self):
         return self.meal.sale_price * self.quantity
+    
+    def save(self, *args, **kwargs):
+        self.meal.quantity_available = int(self.meal.quantity_available) - int(self.quantity)
+        self.meal.save()
+        super(MealOrderedLine, self).save(*args, **kwargs)
 
 class MenuOrderedLine(TimeStampMixin,MediaMixin,models.Model):
     ordered  = models.ForeignKey(Ordered, on_delete=models.CASCADE)

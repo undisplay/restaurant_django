@@ -1,6 +1,8 @@
 # vim: set fileencoding=utf-8 :
 from django.contrib import admin
 
+from import_export.admin import ExportActionMixin
+
 from .models import *
 
 class DrinkOrderedLineInline(admin.StackedInline):
@@ -16,12 +18,14 @@ class MenuOrderedLineInline(admin.StackedInline):
 class WashOrderedLineInline(admin.StackedInline):
     model=WashOrderedLine
 
-class OrderedAdmin(admin.ModelAdmin):
+class OrderedAdmin(ExportActionMixin,admin.ModelAdmin):
 
-    list_display = ('id', 'employe', 'client')
+    list_display = ('id', 'employe', 'client','total_price')
     list_filter = (
         'employe',
         'client',
+        'updated_at',
+        'is_complete',
     )
 
     inlines=[
@@ -31,25 +35,25 @@ class OrderedAdmin(admin.ModelAdmin):
         WashOrderedLineInline,
     ]
 
-class DrinkOrderedLineAdmin(admin.ModelAdmin):
+class DrinkOrderedLineAdmin(ExportActionMixin,admin.ModelAdmin):
 
     list_display = ('id', 'ordered', 'drink', 'quantity')
     list_filter = ('ordered', 'drink', 'id', 'ordered', 'drink', 'quantity')
 
 
-class WineOrderedLineAdmin(admin.ModelAdmin):
+class WineOrderedLineAdmin(ExportActionMixin,admin.ModelAdmin):
 
     list_display = ('id', 'ordered', 'wine', 'quantity')
     list_filter = ('ordered', 'wine', 'id', 'ordered', 'wine', 'quantity')
 
 
-class MealOrderedLineAdmin(admin.ModelAdmin):
+class MealOrderedLineAdmin(ExportActionMixin,admin.ModelAdmin):
 
     list_display = ('id', 'ordered', 'meal', 'quantity')
     list_filter = ('ordered', 'meal', 'id', 'ordered', 'meal', 'quantity')
 
 
-class MenuOrderedLineAdmin(admin.ModelAdmin):
+class MenuOrderedLineAdmin(ExportActionMixin,admin.ModelAdmin):
 
     list_display = ('id', 'ordered', 'menu', 'quantity')
     list_filter = ('ordered', 'menu', 'id', 'ordered', 'menu', 'quantity')

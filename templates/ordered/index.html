@@ -22,32 +22,32 @@
         <li class="nav-item" data-bs-toggle="modal" data-bs-target="#addClientForm">
             <a href="#" class="nav-link">+ New</a>
         </li>
-        <!-- Modal Add Ordered -->
-        <form method="POST" class="modal fade" id="addClientForm" tabindex="-1" data-bs-backdrop="static" aria-hidden="true">
-            {% csrf_token %}
-            <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h6 class="modal-title" id="exampleModalLabel">
-                    Client
-                </h6>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                    <label for="">Name:</label>
-                    <input type="text" required class="form-control" name="client" id="" aria-describedby="helpId" placeholder="EX: John Doe">
-                    <small id="helpId" class="form-text text-muted">Name of the client</small>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <input type="submit" class="btn btn-primary" value="Add" />
-                </div>
-            </div>
-            </div>
-        </form>
     </ul>
+    <!-- Modal Add Ordered -->
+    <form method="POST" class="modal fade" id="addClientForm" tabindex="-1" data-bs-backdrop="static" aria-hidden="true">
+        {% csrf_token %}
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h6 class="modal-title" id="exampleModalLabel">
+                Client
+            </h6>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                <label for="">Name:</label>
+                <input type="text" required class="form-control" name="client" id="" aria-describedby="helpId" placeholder="EX: John Doe">
+                <small id="helpId" class="form-text text-muted">Name of the client</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <input type="submit" class="btn btn-primary" value="Add" />
+            </div>
+        </div>
+        </div>
+    </form>
     <div class="p-2 col-12 row m-auto">
         <!-- Ordereds -->
         <div class="tab-content col-12" id="nav-tabContent">
@@ -221,7 +221,7 @@
                                 <div class="card">
                                     <div class="card-header d-flex justify-content-between">
                                         <h5>Invoice</h5>
-                                        <button type="button" class="btn btn-primary">Print</button>
+                                        <a href="{% url 'sale_print' ordered.id %}" class="btn btn-primary">Print</a>
                                     </div>
                                     <div class="card-body">
                                         <table class="table">
@@ -252,8 +252,8 @@
                                                 {% endfor %}
                                                 {% for washLine in ordered.washorderedline_set.all %}
                                                     <tr>
-                                                        <td>{{washLine.wash.name}}</td>
-                                                        <td>{{washLine.wash.sale_price}}</td>
+                                                        <td>{{washLine.wash.type}}</td>
+                                                        <td>{{washLine.wash.wash_price}}</td>
                                                         <td>{{washLine.quantity}}</td>
                                                         <td>{{washLine.total_price}}</td>
                                                     </tr>
