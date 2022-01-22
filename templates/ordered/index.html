@@ -94,6 +94,13 @@
                                                                         class="form-control" name="quantity" required id="" aria-describedby="helpId" placeholder="EX: 1">
                                                                     <small id="helpId" class="form-text text-muted">Commande quantity</small>
                                                                     </div>
+                                                                    {% if drink.sale_price_ml %}
+                                                                        <div class="btn-group" data-toggle="buttons">
+                                                                            <label class="">
+                                                                                Is Ml: <input type="checkbox" name="is_ml" id="" autocomplete="off">
+                                                                            </label>
+                                                                        </div>
+                                                                    {% endif %}
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -302,8 +309,8 @@
                                             <tbody>
                                                 {% for dinkLine in ordered.drinkorderedline_set.all %}
                                                     <tr>
-                                                        <td>{{dinkLine.drink.name}}</td>
-                                                        <td>{{dinkLine.drink.sale_price}}</td>
+                                                        <td>{{dinkLine.drink.name}}{% if dinkLine.is_ml %}(ml){% endif %}</td>
+                                                        <td>{% if dinkLine.is_ml %}{{dinkLine.drink.sale_price_ml}}{% else %}{{dinkLine.drink.sale_price}}{% endif %}</td>
                                                         <td>{{dinkLine.quantity}}</td>
                                                         <td>{{dinkLine.total_price}}</td>
                                                     </tr>
