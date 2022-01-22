@@ -88,6 +88,8 @@ def sale_line(request):
                 room = None
             
             if ordered and room:
+                if request.POST["is_night"]: 
+                    RoomOrderedLine.objects.create(ordered = ordered,room = room, quantity = request.POST["quantity"],is_night=True)
                 RoomOrderedLine.objects.create(ordered = ordered,room = room, quantity = request.POST["quantity"])
                 ordered.save()
         

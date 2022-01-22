@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 class Room(TimeStampMixin,MediaMixin,models.Model): 
     loan_price    = models.DecimalField(_('Price'),help_text=_('Ex: 300'),max_length=255,max_digits=11,decimal_places=2,blank=False)
+    night_price   = models.DecimalField(_('Night Price'),help_text=_('Ex: 4000'),max_length=255,max_digits=11,decimal_places=2,blank=False)
     number        = models.CharField(_('Number'),help_text='Ex: CH1',max_length=255,blank=False)
     created_at    = models.DateTimeField(_("entry date"),auto_now=True,blank=False)
     

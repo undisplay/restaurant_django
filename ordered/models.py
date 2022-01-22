@@ -95,6 +95,7 @@ class WashOrderedLine(TimeStampMixin,MediaMixin,models.Model):
 class RoomOrderedLine(TimeStampMixin,MediaMixin,models.Model):
     ordered  = models.ForeignKey(Ordered, on_delete=models.CASCADE)
     room     = models.ForeignKey(Room, on_delete=models.CASCADE)
+    is_night = models.BooleanField(_("Is Night"),default=False,blank=False)
     quantity = models.IntegerField(_('Quantity'),help_text=_('Ex: 1'),blank=False,default=1)
 
     def __str__(self):
@@ -102,5 +103,7 @@ class RoomOrderedLine(TimeStampMixin,MediaMixin,models.Model):
     
     @property
     def total_price(self):
+        if self.is_night:
+            return self.room.night_price * self.quantity
         return self.room.loan_price * self.quantity
     

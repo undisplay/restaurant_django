@@ -66,7 +66,7 @@
                                             {% for drink in drinks %}
                                                 <div class="col-md-2">
                                                     <div class="card">
-                                                        <div data-bs-toggle="modal" data-bs-target="#drink-{{drink.id}}">
+                                                        <div data-bs-toggle="modal" data-bs-target="#drink-{{ordered.id}}-{{drink.id}}">
                                                             {% if drink.image %}<img class="card-img-top"  src="{{drink.image.url}}" alt="{{drink.name}}">{% endif %}
                                                             <div class="card-body">
                                                                 <h6 class="card-title">{{drink.name}}</h6>
@@ -74,7 +74,7 @@
                                                             </div>
                                                         </div>
                                                         <!-- Modal -->
-                                                        <form method="POST" action="{% url 'sale_line' %}" class="modal fade" id="drink-{{drink.id}}" tabindex="-1"  data-bs-backdrop="static" aria-hidden="true">
+                                                        <form method="POST" action="{% url 'sale_line' %}" class="modal fade" id="drink-{{ordered.id}}-{{drink.id}}" tabindex="-1"  data-bs-backdrop="static" aria-hidden="true">
                                                             {% csrf_token %}
                                                             <div class="modal-dialog">
                                                             <div class="modal-content">
@@ -91,7 +91,7 @@
                                                                     <div class="form-group">
                                                                     <label for="">Quantity:</label>
                                                                     <input type="text"
-                                                                        class="form-control" name="quantity" id="" aria-describedby="helpId" placeholder="EX: 1">
+                                                                        class="form-control" name="quantity" required id="" aria-describedby="helpId" placeholder="EX: 1">
                                                                     <small id="helpId" class="form-text text-muted">Commande quantity</small>
                                                                     </div>
                                                                 </div>
@@ -121,7 +121,7 @@
                                             {% for meal in meals %}
                                                 <div class="col-md-2">
                                                     <div class="card">
-                                                        <div data-bs-toggle="modal" data-bs-target="#meal-{{meal.id}}">
+                                                        <div data-bs-toggle="modal" data-bs-target="#meal-{{ordered.id}}-{{meal.id}}">
                                                             {% if meal.image %}<img class="card-img-top"  src="{{meal.image.url}}" alt="{{meal.name}}">{% endif %}
                                                             <div class="card-body">
                                                                 <h6 class="card-title">{{meal.name}}</h6>
@@ -129,7 +129,7 @@
                                                             </div>
                                                         </div>
                                                         <!-- Modal -->
-                                                        <form method="POST" action="{% url 'sale_line' %}" class="modal fade" id="meal-{{meal.id}}" tabindex="-1"  data-bs-backdrop="static" aria-hidden="true">
+                                                        <form method="POST" action="{% url 'sale_line' %}" class="modal fade" id="meal-{{ordered.id}}-{{meal.id}}" tabindex="-1"  data-bs-backdrop="static" aria-hidden="true">
                                                             {% csrf_token %}
                                                             <div class="modal-dialog">
                                                             <div class="modal-content">
@@ -146,7 +146,7 @@
                                                                     <div class="form-group">
                                                                     <label for="">Quantity:</label>
                                                                     <input type="text"
-                                                                        class="form-control" name="quantity" id="" aria-describedby="helpId" placeholder="EX: 1">
+                                                                        class="form-control" name="quantity" required id="" aria-describedby="helpId" placeholder="EX: 1">
                                                                     <small id="helpId" class="form-text text-muted">Commande quantity</small>
                                                                     </div>
                                                                 </div>
@@ -176,7 +176,7 @@
                                             {% for wash in washes %}
                                                 <div class="col-md-2">
                                                     <div class="card">
-                                                        <div data-bs-toggle="modal" data-bs-target="#wash-{{wash.id}}">
+                                                        <div data-bs-toggle="modal" data-bs-target="#wash-{{ordered.id}}-{{wash.id}}">
                                                             {% if wash.image %}<img class="card-img-top"  src="{{wash.image.url}}" alt="{{wash.type}}">{% endif %}
                                                             <div class="card-body">
                                                                 <h6 class="card-title">{{wash.type}}</h6>
@@ -184,7 +184,7 @@
                                                             </div>
                                                         </div>
                                                         <!-- Modal -->
-                                                        <form method="POST" action="{% url 'sale_line' %}" class="modal fade" id="wash-{{wash.id}}" tabindex="-1"  data-bs-backdrop="static" aria-hidden="true">
+                                                        <form method="POST" action="{% url 'sale_line' %}" class="modal fade" id="wash-{{ordered.id}}-{{wash.id}}" tabindex="-1"  data-bs-backdrop="static" aria-hidden="true">
                                                             {% csrf_token %}
                                                             <div class="modal-dialog">
                                                             <div class="modal-content">
@@ -201,7 +201,7 @@
                                                                     <div class="form-group">
                                                                     <label for="">Quantity:</label>
                                                                     <input type="text"
-                                                                        class="form-control" name="quantity" id="" aria-describedby="helpId" placeholder="EX: 1">
+                                                                        class="form-control" name="quantity" required id="" aria-describedby="helpId" placeholder="EX: 1">
                                                                     <small id="helpId" class="form-text text-muted">Commande quantity</small>
                                                                     </div>
                                                                 </div>
@@ -231,7 +231,7 @@
                                             {% for room in rooms %}
                                                 <div class="col-md-2">
                                                     <div class="card">
-                                                        <div data-bs-toggle="modal" data-bs-target="#room-{{room.id}}">
+                                                        <div data-bs-toggle="modal" data-bs-target="#room-{{ordered.id}}-{{room.id}}">
                                                             {% if room.image %}<img class="card-img-top"  src="{{room.image.url}}" alt="{{room.number}}">{% endif %}
                                                             <div class="card-body">
                                                                 <h6 class="card-title">{{room.number}}</h6>
@@ -239,7 +239,7 @@
                                                             </div>
                                                         </div>
                                                         <!-- Modal -->
-                                                        <form method="POST" action="{% url 'sale_line' %}" class="modal fade" id="room-{{room.id}}" tabindex="-1"  data-bs-backdrop="static" aria-hidden="true">
+                                                        <form method="POST" action="{% url 'sale_line' %}" class="modal fade" id="room-{{ordered.id}}-{{room.id}}" tabindex="-1"  data-bs-backdrop="static" aria-hidden="true">
                                                             {% csrf_token %}
                                                             <div class="modal-dialog">
                                                             <div class="modal-content">
@@ -256,8 +256,13 @@
                                                                     <div class="form-group">
                                                                     <label for="">Quantity:</label>
                                                                     <input type="text"
-                                                                        class="form-control" name="quantity" id="" aria-describedby="helpId" placeholder="EX: 1">
+                                                                        class="form-control" name="quantity" required id="" aria-describedby="helpId" placeholder="EX: 1">
                                                                     <small id="helpId" class="form-text text-muted">Commande quantity</small>
+                                                                    </div>
+                                                                    <div class="btn-group" data-toggle="buttons">
+                                                                        <label class="">
+                                                                            Is Night: <input type="checkbox" name="is_night" id="" autocomplete="off">
+                                                                        </label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -321,8 +326,8 @@
                                                 {% endfor %}
                                                 {% for roomLine in ordered.roomorderedline_set.all %}
                                                     <tr>
-                                                        <td>{{roomLine.room.number}}</td>
-                                                        <td>{{roomLine.room.loan_price}}</td>
+                                                        <td>{{roomLine.room.number}}{% if roomLine.is_night %}(night){% endif %}</td>
+                                                        <td>{% if roomLine.is_night %}{{roomLine.room.night_price}}{% else %}{{roomLine.room.loan_price}}{% endif %}</td>
                                                         <td>{{roomLine.quantity}}</td>
                                                         <td>{{roomLine.total_price}}</td>
                                                     </tr>
