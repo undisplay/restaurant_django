@@ -88,9 +88,12 @@ def sale_line(request):
                 room = None
             
             if ordered and room:
-                if request.POST["is_night"]: 
+                is_night = request.POST.get("is_night", None)
+                
+                if is_night : 
                     RoomOrderedLine.objects.create(ordered = ordered,room = room, quantity = request.POST["quantity"],is_night=True)
-                RoomOrderedLine.objects.create(ordered = ordered,room = room, quantity = request.POST["quantity"])
+                else:
+                    RoomOrderedLine.objects.create(ordered = ordered,room = room, quantity = request.POST["quantity"])
                 ordered.save()
         
         return redirect("sale_view")
@@ -109,5 +112,5 @@ def sale_print(request,id):
         ordered.is_complete = True
         
         ordered.save()
-    
-    return redirect("sale_view")
+        
+    return render(request,"ordered/receipt.html",{"ordered":ordered})

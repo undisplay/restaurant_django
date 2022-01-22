@@ -11,9 +11,5 @@ class Employe(TimeStampMixin,MediaMixin,AbstractUser):
     phone       = PhoneNumberField(_('Phone'),help_text='Ex:+509XXXXXXXX',blank=True,max_length=15)
     address     = models.TextField(_('Address'),help_text=_('Entrer address'),blank=True,null=True)
 
-    def save(self, *args, **kwargs):
-       self.set_password(self.password)
-       super(Employe, self).save(*args, **kwargs)
-
     def __str__(self):
         return 'Firstname:%s Lastname:%s' % (self.first_name,self.last_name)

@@ -44,6 +44,6 @@ def _register(model, admin_class):
     admin.site.register(model, admin_class)
 
 
-_register(Menu, MenuAdmin)
-_register(MenuMeal, MenuMealAdmin)
-_register(MenuDrink, MenuDrinkAdmin)
+# _register(Menu, MenuAdmin)
+# _register(MenuMeal, MenuMealAdmin)
+# _register(MenuDrink, MenuDrinkAdmin)
