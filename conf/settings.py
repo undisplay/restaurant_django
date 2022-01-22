@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'menu',
     'ordered',
     'wash',
+    'motel',
     
     'rest_framework',
     'drf_generators',

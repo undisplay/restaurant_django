@@ -8,6 +8,7 @@ from employe.models import *
 from drink.models import *
 from food.models import *
 from menu.models import *
+from motel.models import *
 from wash.models import *
 
 class Ordered(TimeStampMixin,MediaMixin,models.Model):
@@ -29,6 +30,9 @@ class Ordered(TimeStampMixin,MediaMixin,models.Model):
             total += item.total_price
             
         for item in self.washorderedline_set.all():
+            total += item.total_price
+            
+        for item in self.roomorderedline_set.all():
             total += item.total_price
             
         return total
@@ -87,4 +91,16 @@ class WashOrderedLine(TimeStampMixin,MediaMixin,models.Model):
     @property
     def total_price(self):
         return self.wash.wash_price * self.quantity
+    
+class RoomOrderedLine(TimeStampMixin,MediaMixin,models.Model):
+    ordered  = models.ForeignKey(Ordered, on_delete=models.CASCADE)
+    room     = models.ForeignKey(Room, on_delete=models.CASCADE)
+    quantity = models.IntegerField(_('Quantity'),help_text=_('Ex: 1'),blank=False,default=1)
+
+    def __str__(self):
+        return 'Ordered:(%s) Room:(%s)' % (self.ordered,self.room)
+    
+    @property
+    def total_price(self):
+        return self.room.loan_price * self.quantity
     

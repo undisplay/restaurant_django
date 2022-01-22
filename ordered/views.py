@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from .models import DrinkOrderedLine, MealOrderedLine, WashOrderedLine, Ordered,Drink,Meal,Wash
+from .models import RoomOrderedLine, DrinkOrderedLine, MealOrderedLine, WashOrderedLine, Ordered,Drink,Meal,Wash,Room
 
 @login_required()
 def sale_view(request):
@@ -28,12 +28,18 @@ def sale_view(request):
             washes = Wash.objects.all().order_by("type")
         except :
             washes = []
-        
+            
+        try:
+            rooms = Room.objects.all().order_by("number")
+        except :
+            rooms = []
+            
         return render(request,"ordered/index.html",{
             "ordereds":ordereds,
             "meals":meals,
             "drinks":drinks,
-            "washes":washes
+            "washes":washes,
+            "rooms":rooms
         })
   
 @login_required()       
@@ -75,6 +81,16 @@ def sale_line(request):
                 WashOrderedLine.objects.create(ordered = ordered,wash = wash, quantity = request.POST["quantity"])
                 ordered.save()
             
+        if request.POST["product"] == "room":  
+            try:
+                room = Room.objects.get(id = request.POST["id"])
+            except :
+                room = None
+            
+            if ordered and room:
+                RoomOrderedLine.objects.create(ordered = ordered,room = room, quantity = request.POST["quantity"])
+                ordered.save()
+        
         return redirect("sale_view")
     else:
         return redirect("sale_view")

@@ -55,6 +55,7 @@
                 <div class="tab-pane fade {% if ordered.id == ordereds.0.id %} show active {% endif %}" id="nav-{{ordered.id}}" role="tabpanel">
                     <div class="row">
                         <div class="row col-12 col-md-7 m-auto mt-0 p-0">
+                            {% if drinks %}
                             <div class="col-xs-1-12">
                                 <div class="card">
                                     <div class="card-header">
@@ -108,6 +109,8 @@
                                     </div>
                                 </div>
                             </div>
+                            {% endif %}
+                            {% if meals %}
                             <div class="col-xs-1-12">
                                 <div class="card">
                                     <div class="card-header">
@@ -161,6 +164,8 @@
                                     </div>
                                 </div>
                             </div>
+                            {% endif %}
+                            {% if washes %}
                             <div class="col-xs-1-12">
                                 <div class="card">
                                     <div class="card-header">
@@ -214,6 +219,62 @@
                                     </div>
                                 </div>
                             </div>
+                            {% endif %}
+                            {% if rooms %}
+                            <div class="col-xs-1-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Motel</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            {% for room in rooms %}
+                                                <div class="col-md-2">
+                                                    <div class="card">
+                                                        <div data-bs-toggle="modal" data-bs-target="#room-{{room.id}}">
+                                                            {% if room.image %}<img class="card-img-top"  src="{{room.image.url}}" alt="{{room.number}}">{% endif %}
+                                                            <div class="card-body">
+                                                                <h6 class="card-title">{{room.number}}</h6>
+                                                                <p class="card-text">{{room.loan_price}} gourdes</p>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Modal -->
+                                                        <form method="POST" action="{% url 'sale_line' %}" class="modal fade" id="room-{{room.id}}" tabindex="-1"  data-bs-backdrop="static" aria-hidden="true">
+                                                            {% csrf_token %}
+                                                            <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                <h6 class="modal-title" id="exampleModalLabel">
+                                                                    {{room.number}}
+                                                                </h6>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <input type="hidden" name="ordered_id" value="{{ordered.id}}" />
+                                                                    <input type="hidden" name="id" value="{{room.id}}" />
+                                                                    <input type="hidden" name="product" value="room" />
+                                                                    <div class="form-group">
+                                                                    <label for="">Quantity:</label>
+                                                                    <input type="text"
+                                                                        class="form-control" name="quantity" id="" aria-describedby="helpId" placeholder="EX: 1">
+                                                                    <small id="helpId" class="form-text text-muted">Commande quantity</small>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <input type="submit" class="btn btn-primary" value="Buy" />
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
                         </div>
                         <!-- Invoice -->
                         <div class="col-12 col-md-5 m-auto mt-0 sticky-top">
@@ -256,6 +317,14 @@
                                                         <td>{{washLine.wash.wash_price}}</td>
                                                         <td>{{washLine.quantity}}</td>
                                                         <td>{{washLine.total_price}}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                {% for roomLine in ordered.roomorderedline_set.all %}
+                                                    <tr>
+                                                        <td>{{roomLine.room.number}}</td>
+                                                        <td>{{roomLine.room.loan_price}}</td>
+                                                        <td>{{roomLine.quantity}}</td>
+                                                        <td>{{roomLine.total_price}}</td>
                                                     </tr>
                                                 {% endfor %}
                                             </tbody>

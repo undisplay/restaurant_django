@@ -17,6 +17,9 @@ class MenuOrderedLineInline(admin.StackedInline):
     
 class WashOrderedLineInline(admin.StackedInline):
     model=WashOrderedLine
+    
+class RoomOrderedLineInline(admin.StackedInline):
+    model=RoomOrderedLine
 
 class OrderedAdmin(ExportActionMixin,admin.ModelAdmin):
 
@@ -33,31 +36,8 @@ class OrderedAdmin(ExportActionMixin,admin.ModelAdmin):
         DrinkOrderedLineInline,
         MealOrderedLineInline,
         WashOrderedLineInline,
+        RoomOrderedLineInline,
     ]
-
-class DrinkOrderedLineAdmin(ExportActionMixin,admin.ModelAdmin):
-
-    list_display = ('id', 'ordered', 'drink', 'quantity')
-    list_filter = ('ordered', 'drink', 'id', 'ordered', 'drink', 'quantity')
-
-
-class WineOrderedLineAdmin(ExportActionMixin,admin.ModelAdmin):
-
-    list_display = ('id', 'ordered', 'wine', 'quantity')
-    list_filter = ('ordered', 'wine', 'id', 'ordered', 'wine', 'quantity')
-
-
-class MealOrderedLineAdmin(ExportActionMixin,admin.ModelAdmin):
-
-    list_display = ('id', 'ordered', 'meal', 'quantity')
-    list_filter = ('ordered', 'meal', 'id', 'ordered', 'meal', 'quantity')
-
-
-class MenuOrderedLineAdmin(ExportActionMixin,admin.ModelAdmin):
-
-    list_display = ('id', 'ordered', 'menu', 'quantity')
-    list_filter = ('ordered', 'menu', 'id', 'ordered', 'menu', 'quantity')
-
 
 def _register(model, admin_class):
     admin.site.register(model, admin_class)
