@@ -1,15 +1,42 @@
 # vim: set fileencoding=utf-8 :
 from django.contrib import admin
 
-from import_export.admin import ExportActionMixin
-
 from . import models
 
 
-class EmployeAdmin(ExportActionMixin,admin.ModelAdmin):
+class RestaurantAdmin(admin.ModelAdmin):
 
     list_display = (
         'id',
+        'created_at',
+        'updated_at',
+        'image',
+        'name',
+        'phone1',
+        'phone2',
+        'address',
+    )
+    list_filter = (
+        'created_at',
+        'updated_at',
+        'id',
+        'created_at',
+        'updated_at',
+        'image',
+        'name',
+        'phone1',
+        'phone2',
+        'address',
+    )
+    search_fields = ('name',)
+    date_hierarchy = 'created_at'
+
+
+class EmployeAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'id',
+        'password',
         'last_login',
         'is_superuser',
         'username',
@@ -19,8 +46,12 @@ class EmployeAdmin(ExportActionMixin,admin.ModelAdmin):
         'is_staff',
         'is_active',
         'date_joined',
+        'created_at',
+        'updated_at',
+        'image',
         'phone',
         'address',
+        'restaurant',
     )
     list_filter = (
         'last_login',
@@ -28,7 +59,11 @@ class EmployeAdmin(ExportActionMixin,admin.ModelAdmin):
         'is_staff',
         'is_active',
         'date_joined',
+        'created_at',
+        'updated_at',
+        'restaurant',
         'id',
+        'password',
         'last_login',
         'is_superuser',
         'username',
@@ -38,15 +73,20 @@ class EmployeAdmin(ExportActionMixin,admin.ModelAdmin):
         'is_staff',
         'is_active',
         'date_joined',
+        'created_at',
+        'updated_at',
+        'image',
         'phone',
         'address',
+        'restaurant',
     )
-    raw_id_fields = ('groups', 'user_permissions')
-
+    raw_id_fields = ('groups',)
+    date_hierarchy = 'created_at'
 
 
 def _register(model, admin_class):
     admin.site.register(model, admin_class)
 
 
+_register(models.Restaurant, RestaurantAdmin)
 _register(models.Employe, EmployeAdmin)
