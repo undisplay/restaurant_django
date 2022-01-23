@@ -43,6 +43,11 @@
             Cashier: {{ordered.employe.first_name}} 
         {% endif %}
     </p>
+    <p>
+        {% if ordered.client %}
+            Client: {{ordered.client}} 
+        {% endif %}
+    </p>
 </div>
 <div class="">
     <table class="table">
@@ -50,7 +55,7 @@
             <tr>
                 <th>Article</th>
                 <th>Unit (gourdes)</th>
-                <th>Quantity</th>
+                <th>Qty</th>
                 <th>Total (gourdes)</th>
             </tr>
         </thead>
