@@ -30,7 +30,7 @@
                     {{ordered.employe.restaurant.address}}
                 </p>
                 <p>
-                    {{ordered.employe.restaurant.phone1}} / {{ordered.employe.restaurant.phone2}}
+                    {{ordered.employe.restaurant.phone1}}{% if ordered.employe.restaurant.phone2 %} / {{ordered.employe.restaurant.phone2}} {% endif %}
                 </P>
             </div>
         </div>
