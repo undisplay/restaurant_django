@@ -58,10 +58,10 @@ def sale_line(request):
                 drink = None
             
             if ordered and drink:
-                is_ml = request.POST.get("is_ml", None)
+                is_shot = request.POST.get("is_shot", None)
                 
-                if is_ml : 
-                    DrinkOrderedLine.objects.create(ordered = ordered,drink = drink, quantity = request.POST["quantity"],is_ml=True)
+                if is_shot : 
+                    DrinkOrderedLine.objects.create(ordered = ordered,drink = drink, quantity = request.POST["quantity"],is_shot=True)
                 else:
                     DrinkOrderedLine.objects.create(ordered = ordered,drink = drink, quantity = request.POST["quantity"])
                 ordered.save()

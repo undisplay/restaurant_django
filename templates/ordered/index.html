@@ -97,7 +97,7 @@
                                                                     {% if drink.sale_price_ml %}
                                                                         <div class="btn-group" data-toggle="buttons">
                                                                             <label class="">
-                                                                                Is Ml: <input type="checkbox" name="is_ml" id="" autocomplete="off">
+                                                                                Is shot: <input type="checkbox" name="is_shot" id="" autocomplete="off">
                                                                             </label>
                                                                         </div>
                                                                     {% endif %}
@@ -309,8 +309,8 @@
                                             <tbody>
                                                 {% for dinkLine in ordered.drinkorderedline_set.all %}
                                                     <tr>
-                                                        <td>{{dinkLine.drink.name}}{% if dinkLine.is_ml %}(ml){% endif %}</td>
-                                                        <td>{% if dinkLine.is_ml %}{{dinkLine.drink.sale_price_ml}}{% else %}{{dinkLine.drink.sale_price}}{% endif %}</td>
+                                                        <td>{{dinkLine.drink.name}}{% if dinkLine.is_shot %}(shot){% endif %}</td>
+                                                        <td>{% if dinkLine.is_shot %}{{dinkLine.drink.sale_price_ml}}{% else %}{{dinkLine.drink.sale_price}}{% endif %}</td>
                                                         <td>{{dinkLine.quantity}}</td>
                                                         <td>{{dinkLine.total_price}}</td>
                                                     </tr>

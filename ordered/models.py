@@ -41,19 +41,19 @@ class DrinkOrderedLine(TimeStampMixin,MediaMixin,models.Model):
     ordered  = models.ForeignKey(Ordered, on_delete=models.CASCADE)
     drink    = models.ForeignKey(Drink, on_delete=models.CASCADE)
     quantity = models.IntegerField(_('Quantity'),help_text=_('Ex: 1'),blank=False,default=1)
-    is_ml    = models.BooleanField(_("Is Ml"),default=False,blank=False)
+    is_shot    = models.BooleanField(_("Is shot"),default=False,blank=False)
 
     def __str__(self):
         return 'Ordered:(%s) Drink:(%s)' % (self.ordered,self.drink)
     
     @property
     def total_price(self):
-        if self.is_ml:
+        if self.is_shot:
             return self.drink.sale_price_ml * self.quantity
         return self.drink.sale_price * self.quantity
     
     def save(self, *args, **kwargs):
-        if not self.is_ml:
+        if not self.is_shot:
             self.drink.quantity_available = int(self.drink.quantity_available) - int(self.quantity)
             self.drink.save()
         super(DrinkOrderedLine, self).save(*args, **kwargs)
