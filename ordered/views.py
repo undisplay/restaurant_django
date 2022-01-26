@@ -4,8 +4,8 @@ from .models import RoomOrderedLine, DrinkOrderedLine, MealOrderedLine, WashOrde
 
 from django_replicated.decorators import use_master, use_slave
 
-@login_required()
 @use_master
+@login_required()
 def sale_view(request):
     
     if request.method == "POST":
@@ -45,8 +45,8 @@ def sale_view(request):
             "rooms":rooms
         })
   
-@login_required()  
-@use_master     
+@use_master 
+@login_required()      
 def sale_line(request):
     
     if request.method == "POST":
@@ -109,8 +109,8 @@ def sale_line(request):
     else:
         return redirect("sale_view")
     
-@login_required()
 @use_master
+@login_required()
 def sale_print(request,id):
     
     try:
