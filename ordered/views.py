@@ -2,7 +2,10 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from .models import RoomOrderedLine, DrinkOrderedLine, MealOrderedLine, WashOrderedLine, Ordered,Drink,Meal,Wash,Room
 
+from django_replicated.decorators import use_master, use_slave
+
 @login_required()
+@use_master
 def sale_view(request):
     
     if request.method == "POST":
@@ -42,7 +45,8 @@ def sale_view(request):
             "rooms":rooms
         })
   
-@login_required()       
+@login_required()  
+@use_master     
 def sale_line(request):
     
     if request.method == "POST":
@@ -106,6 +110,7 @@ def sale_line(request):
         return redirect("sale_view")
     
 @login_required()
+@use_master
 def sale_print(request,id):
     
     try:
