@@ -18,15 +18,6 @@ class RestaurantAdmin(admin.ModelAdmin):
     )
     list_filter = (
         'created_at',
-        'updated_at',
-        'id',
-        'created_at',
-        'updated_at',
-        'image',
-        'name',
-        'phone1',
-        'phone2',
-        'address',
     )
     search_fields = ('name',)
     date_hierarchy = 'created_at'
@@ -36,7 +27,6 @@ class EmployeAdmin(admin.ModelAdmin):
 
     list_display = (
         'id',
-        'password',
         'last_login',
         'is_superuser',
         'username',
@@ -54,30 +44,9 @@ class EmployeAdmin(admin.ModelAdmin):
         'restaurant',
     )
     list_filter = (
-        'last_login',
         'is_superuser',
         'is_staff',
         'is_active',
-        'date_joined',
-        'created_at',
-        'updated_at',
-        'restaurant',
-        'id',
-        'password',
-        'last_login',
-        'is_superuser',
-        'username',
-        'first_name',
-        'last_name',
-        'email',
-        'is_staff',
-        'is_active',
-        'date_joined',
-        'created_at',
-        'updated_at',
-        'image',
-        'phone',
-        'address',
         'restaurant',
     )
     raw_id_fields = ('groups',)

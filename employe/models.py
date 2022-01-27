@@ -19,7 +19,7 @@ class Restaurant(TimeStampMixin,MediaMixin,models.Model):
 class Employe(TimeStampMixin,MediaMixin,AbstractUser):
     phone       = PhoneNumberField(_('Phone'),help_text='Ex:+509XXXXXXXX',blank=True,max_length=15)
     address     = models.TextField(_('Address'),help_text=_('Entrer address'),blank=True,null=True)
-    restaurant  = models.ForeignKey(Restaurant, on_delete=models.CASCADE,blank=True,null=True)
+    restaurant  = models.ForeignKey(Restaurant, on_delete=models.CASCADE,blank=False,null=False)
     
     def __str__(self):
         return 'Firstname:%s Lastname:%s' % (self.first_name,self.last_name)

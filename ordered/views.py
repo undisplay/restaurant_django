@@ -6,31 +6,31 @@ from .models import RoomOrderedLine, DrinkOrderedLine, MealOrderedLine, WashOrde
 def sale_view(request):
     
     if request.method == "POST":
-        Ordered.objects.create(employe = request.user,client = request.POST["client"])
+        Ordered.objects.create(employe = request.user,restaurant=request.user.restaurant,client = request.POST["client"])
         return redirect("sale_view")
     else:
         try:
-            ordereds = Ordered.objects.all().filter(is_complete=False).order_by("-updated_at")
+            ordereds = Ordered.objects.all().filter(is_complete=False,restaurant=request.user.restaurant).order_by("-updated_at")
         except :
             ordereds = []
             
         try:
-            meals = Meal.objects.all().order_by("name")
+            meals = Meal.objects.all().filter(restaurant=request.user.restaurant).order_by("name")
         except :
             meals = []
             
         try:
-            drinks = Drink.objects.all().order_by("name")
+            drinks = Drink.objects.all().filter(restaurant=request.user.restaurant).order_by("name")
         except :
             drinks = []
             
         try:
-            washes = Wash.objects.all().order_by("type")
+            washes = Wash.objects.all().filter(restaurant=request.user.restaurant).order_by("type")
         except :
             washes = []
             
         try:
-            rooms = Room.objects.all().order_by("number")
+            rooms = Room.objects.all().filter(restaurant=request.user.restaurant).order_by("number")
         except :
             rooms = []
             

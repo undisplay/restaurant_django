@@ -23,8 +23,9 @@ class RoomOrderedLineInline(admin.StackedInline):
 
 class OrderedAdmin(ExportActionMixin,admin.ModelAdmin):
 
-    list_display = ('id', 'employe', 'client','total_price')
+    list_display = ('id', 'employe', 'restaurant', 'client','total_price')
     list_filter = (
+        'restaurant',
         'employe',
         'client',
         'updated_at',

@@ -4,7 +4,10 @@ from conf.mixins import TimeStampMixin,MediaMixin
 
 from django.utils.translation import gettext_lazy as _
 
+from employe.models import Restaurant
+
 class Room(TimeStampMixin,MediaMixin,models.Model): 
+    restaurant  = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     loan_price    = models.DecimalField(_('Price'),help_text=_('Ex: 300'),max_length=255,max_digits=11,decimal_places=2,blank=False)
     night_price   = models.DecimalField(_('Night Price'),help_text=_('Ex: 4000'),max_length=255,max_digits=11,decimal_places=2,blank=False)
     number        = models.CharField(_('Number'),help_text='Ex: CH1',max_length=255,blank=False)

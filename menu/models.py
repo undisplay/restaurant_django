@@ -6,6 +6,7 @@ from food.models import *
 from drink.models import *
 
 class Menu(models.Model):
+    restaurant  = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     name          = models.CharField(_('Name'),help_text='Ex:Coca',unique=True, max_length=150, blank=False)
     discount      = models.DecimalField(_('Discount(%)'),help_text=_('Ex: 30'),max_length=255,max_digits=11,decimal_places=2,blank=False)
 

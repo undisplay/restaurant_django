@@ -13,6 +13,7 @@ from wash.models import *
 
 class Ordered(TimeStampMixin,MediaMixin,models.Model):
     employe     = models.ForeignKey(Employe, on_delete=models.CASCADE)
+    restaurant  = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     client      = models.CharField(_('Client Name'),help_text=_('Ex: John Doe'), max_length=150, blank=False)
     is_complete = models.BooleanField(_("Is Complete"),default=False,blank=False)
 
