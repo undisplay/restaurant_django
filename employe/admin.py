@@ -1,10 +1,10 @@
 # vim: set fileencoding=utf-8 :
 from django.contrib import admin
-
+from import_export.admin import ImportExportActionModelAdmin
 from . import models
 
 
-class RestaurantAdmin(admin.ModelAdmin):
+class RestaurantAdmin(ImportExportActionModelAdmin):
 
     list_display = (
         'id',
@@ -23,7 +23,7 @@ class RestaurantAdmin(admin.ModelAdmin):
     date_hierarchy = 'created_at'
 
 
-class EmployeAdmin(admin.ModelAdmin):
+class EmployeAdmin(ImportExportActionModelAdmin):
 
     list_display = (
         'id',

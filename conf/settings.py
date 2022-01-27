@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'django_admin_generator',
     'crispy_forms',
+    'import_export',
 
     'drink',
     'employe',

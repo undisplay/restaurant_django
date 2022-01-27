@@ -1,8 +1,7 @@
 # vim: set fileencoding=utf-8 :
 from django.contrib import admin
 
-from import_export.admin import ExportActionMixin
-
+from import_export.admin import ImportExportActionModelAdmin
 from .models import *
 
 class DrinkOrderedLineInline(admin.StackedInline):
@@ -21,7 +20,7 @@ class WashOrderedLineInline(admin.StackedInline):
 class RoomOrderedLineInline(admin.StackedInline):
     model=RoomOrderedLine
 
-class OrderedAdmin(ExportActionMixin,admin.ModelAdmin):
+class OrderedAdmin(ImportExportActionModelAdmin):
 
     list_display = ('id', 'employe', 'restaurant', 'client','total_price')
     list_filter = (
