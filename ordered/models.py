@@ -11,7 +11,7 @@ from menu.models import *
 from motel.models import *
 from wash.models import *
 
-class Ordered(TimeStampMixin,MediaMixin,models.Model):
+class Ordered(TimeStampMixin,MediaMixin,SyncMixin,models.Model):
     employe     = models.ForeignKey(Employe, on_delete=models.CASCADE)
     restaurant  = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     client      = models.CharField(_('Client Name'),help_text=_('Ex: John Doe'), max_length=150, blank=False)
@@ -38,7 +38,7 @@ class Ordered(TimeStampMixin,MediaMixin,models.Model):
             
         return total
 
-class DrinkOrderedLine(TimeStampMixin,MediaMixin,models.Model):
+class DrinkOrderedLine(TimeStampMixin,MediaMixin,SyncMixin,models.Model):
     ordered  = models.ForeignKey(Ordered, on_delete=models.CASCADE)
     drink    = models.ForeignKey(Drink, on_delete=models.CASCADE)
     quantity = models.IntegerField(_('Quantity'),help_text=_('Ex: 1'),blank=False,default=1)
@@ -60,7 +60,7 @@ class DrinkOrderedLine(TimeStampMixin,MediaMixin,models.Model):
         super(DrinkOrderedLine, self).save(*args, **kwargs)
         
     
-class MealOrderedLine(TimeStampMixin,MediaMixin,models.Model):
+class MealOrderedLine(TimeStampMixin,MediaMixin,SyncMixin,models.Model):
     ordered  = models.ForeignKey(Ordered, on_delete=models.CASCADE)
     meal     = models.ForeignKey(Meal, on_delete=models.CASCADE)
     quantity = models.IntegerField(_('Quantity'),help_text=_('Ex: 1'),blank=False,default=1)
@@ -77,7 +77,7 @@ class MealOrderedLine(TimeStampMixin,MediaMixin,models.Model):
         self.meal.save()
         super(MealOrderedLine, self).save(*args, **kwargs)
 
-class MenuOrderedLine(TimeStampMixin,MediaMixin,models.Model):
+class MenuOrderedLine(TimeStampMixin,MediaMixin,SyncMixin,models.Model):
     ordered  = models.ForeignKey(Ordered, on_delete=models.CASCADE)
     menu     = models.ForeignKey(Menu, on_delete=models.CASCADE)
     quantity = models.IntegerField(_('Quantity'),help_text=_('Ex: 1'),blank=False,default=1)
@@ -85,7 +85,7 @@ class MenuOrderedLine(TimeStampMixin,MediaMixin,models.Model):
     def __str__(self):
         return 'Ordered:(%s) Menu:(%s)' % (self.ordered,self.menu)
     
-class WashOrderedLine(TimeStampMixin,MediaMixin,models.Model):
+class WashOrderedLine(TimeStampMixin,MediaMixin,SyncMixin,models.Model):
     ordered  = models.ForeignKey(Ordered, on_delete=models.CASCADE)
     wash     = models.ForeignKey(Wash, on_delete=models.CASCADE)
     quantity = models.IntegerField(_('Quantity'),help_text=_('Ex: 1'),blank=False,default=1)
@@ -97,7 +97,7 @@ class WashOrderedLine(TimeStampMixin,MediaMixin,models.Model):
     def total_price(self):
         return self.wash.wash_price * self.quantity
     
-class RoomOrderedLine(TimeStampMixin,MediaMixin,models.Model):
+class RoomOrderedLine(TimeStampMixin,MediaMixin,SyncMixin,models.Model):
     ordered  = models.ForeignKey(Ordered, on_delete=models.CASCADE)
     room     = models.ForeignKey(Room, on_delete=models.CASCADE)
     is_night = models.BooleanField(_("Is Night"),default=False,blank=False)

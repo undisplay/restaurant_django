@@ -2,10 +2,10 @@ from django.db import models
 
 from django.utils.translation import gettext_lazy as _
 
-from conf.mixins import TimeStampMixin,MediaMixin,StockMixin
+from conf.mixins import SyncMixin, TimeStampMixin,MediaMixin,StockMixin
 from employe.models import Restaurant
 
-class Drink(TimeStampMixin,MediaMixin,StockMixin,models.Model):
+class Drink(TimeStampMixin,MediaMixin,StockMixin,SyncMixin,models.Model):
     class Types(models.TextChoices):
         SOFT    = 'SOFT', _("SOFT")
         BEER    = 'BEER', _("BEER")
