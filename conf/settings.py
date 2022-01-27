@@ -107,9 +107,8 @@ WSGI_APPLICATION = 'conf.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
 DATABASES = {
-    'remote': {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': env("POSTGRESQL_ADDON_DB"),
         'USER': env("POSTGRESQL_ADDON_USER"),
@@ -117,13 +116,26 @@ DATABASES = {
         'HOST': env("POSTGRESQL_ADDON_HOST"),
         'PORT': env("POSTGRESQL_ADDON_PORT"),
         'TIME_ZONE': 'America/New_York',
-    },
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        'TIME_ZONE': 'America/New_York',
     }
 }
+
+if PRODUCTION == None:
+    DATABASES = {
+        'remote': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env("POSTGRESQL_ADDON_DB"),
+            'USER': env("POSTGRESQL_ADDON_USER"),
+            'PASSWORD': env("POSTGRESQL_ADDON_PASSWORD"),
+            'HOST': env("POSTGRESQL_ADDON_HOST"),
+            'PORT': env("POSTGRESQL_ADDON_PORT"),
+            'TIME_ZONE': 'America/New_York',
+        },
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+            'TIME_ZONE': 'America/New_York',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
