@@ -94,7 +94,7 @@
                                                                         class="form-control" name="quantity" required id="" aria-describedby="helpId" placeholder="EX: 1">
                                                                     <small id="helpId" class="form-text text-muted">Commande quantity</small>
                                                                     </div>
-                                                                    {% if drink.sale_price_ml %}
+                                                                    {% if drink.sale_price_shot %}
                                                                         <div class="btn-group" data-toggle="buttons">
                                                                             <label class="">
                                                                                 Is shot: <input type="checkbox" name="is_shot" id="" autocomplete="off">
@@ -310,7 +310,7 @@
                                                 {% for dinkLine in ordered.drinkorderedline_set.all %}
                                                     <tr>
                                                         <td>{{dinkLine.drink.name}}{% if dinkLine.is_shot %}(shot){% endif %}</td>
-                                                        <td>{% if dinkLine.is_shot %}{{dinkLine.drink.sale_price_ml}}{% else %}{{dinkLine.drink.sale_price}}{% endif %}</td>
+                                                        <td>{% if dinkLine.is_shot %}{{dinkLine.drink.sale_price_shot}}{% else %}{{dinkLine.drink.sale_price}}{% endif %}</td>
                                                         <td>{{dinkLine.quantity}}</td>
                                                         <td>{{dinkLine.total_price}}</td>
                                                     </tr>

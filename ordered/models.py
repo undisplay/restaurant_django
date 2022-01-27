@@ -50,7 +50,7 @@ class DrinkOrderedLine(TimeStampMixin,MediaMixin,SyncMixin,models.Model):
     @property
     def total_price(self):
         if self.is_shot:
-            return self.drink.sale_price_ml * self.quantity
+            return self.drink.sale_price_shot * self.quantity
         return self.drink.sale_price * self.quantity
     
     def save(self, *args, **kwargs):
