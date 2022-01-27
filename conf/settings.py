@@ -10,11 +10,26 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+#setup env 
+import environ
+
+env = environ.Env()
+
+try:
+    PRODUCTION = env("PRODUCTION")
+except:
+    PRODUCTION = None
+
+if not PRODUCTION:
+    # reading .env file
+    environ.Env.read_env(os.path.join(BASE_DIR,'.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -94,6 +109,15 @@ WSGI_APPLICATION = 'conf.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
+    'remote': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env("POSTGRESQL_ADDON_DB"),
+        'USER': env("POSTGRESQL_ADDON_USER"),
+        'PASSWORD': env("POSTGRESQL_ADDON_PASSWORD"),
+        'HOST': env("POSTGRESQL_ADDON_HOST"),
+        'PORT': env("POSTGRESQL_ADDON_PORT"),
+        'TIME_ZONE': 'America/New_York',
+    },
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
