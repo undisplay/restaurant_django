@@ -8,26 +8,26 @@ import time
 import logging
 
 class SyncMixin(models.Model):
-    def save(self, *args, **kwargs):
-        format = "%(asctime)s: %(message)s"
-        logging.basicConfig(format=format, level=logging.INFO,datefmt="%H:%M:%S")
+    # def save(self, *args, **kwargs):
+    #     format = "%(asctime)s: %(message)s"
+    #     logging.basicConfig(format=format, level=logging.INFO,datefmt="%H:%M:%S")
            
-        super(SyncMixin, self).save(*args, **kwargs)
+    #     super(SyncMixin, self).save(*args, **kwargs)
         
-        if settings.PRODUCTION == None:
+    #     if settings.PRODUCTION == None:
                 
-            def thread_function():
-                while True:
-                    try:
-                        super(SyncMixin, self).save(*args, **kwargs,using='remote')
-                        logging.info("successfuly save: %s",self)
-                        break
-                    except Exception as e:
-                        logging.info(e)
-                        time.sleep(2)
+    #         def thread_function():
+    #             while True:
+    #                 try:
+    #                     super(SyncMixin, self).save(*args, **kwargs,using='remote')
+    #                     logging.info("successfuly save: %s",self)
+    #                     break
+    #                 except Exception as e:
+    #                     logging.info(e)
+    #                     time.sleep(2)
                         
-            th = threading.Thread(target=thread_function)  
-            th.start()
+    #         th = threading.Thread(target=thread_function)  
+    #         th.start()
             
             
 
