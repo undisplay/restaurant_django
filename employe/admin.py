@@ -1,6 +1,8 @@
 # vim: set fileencoding=utf-8 :
 from django.contrib import admin
 from import_export.admin import ImportExportActionModelAdmin
+
+from employe.forms import UserForm
 from . import models
 
 
@@ -24,6 +26,9 @@ class RestaurantAdmin(ImportExportActionModelAdmin):
 
 
 class EmployeAdmin(ImportExportActionModelAdmin):
+    
+    form = UserForm
+    exclude = ["password"]
 
     list_display = (
         'id',
