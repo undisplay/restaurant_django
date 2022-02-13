@@ -1,0 +1,123 @@
+{% extends "base/pdf_base.html" %}
+
+{% load static %}
+{% load i18n %}
+{% block extra_style %}
+    <style>
+        @media print {
+            @page{
+                size: portrait;
+            }
+        }
+    </style>
+{% endblock %}
+{% block page_header %}
+    <div class="d-flex justify-content-center">
+        <div class="text-center">
+            <h2>
+                {{restaurant.name}}
+            </h2>
+            <p>
+                {{restaurant.address}}
+            </p>
+            <p>
+                {{restaurant.phone1}}{% if restaurant.phone2 %} / {{restaurant.phone2}} {% endif %}
+            </P>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between">
+        <div class="text-center">
+            <h3>
+                Report
+            </h3>
+        </div>
+        <div class="text-center">
+            <h5>Total Sales: {{total_sales}} gourdes </h5>
+        </div>
+    </div>
+    <form class="pb-3 d-flex justify-content-between">
+        <div class="form-group">
+            <label for="From">From:</label>
+            <input type="datetime-local"
+                class="form-control" 
+                name="date_start" 
+                id="From" 
+                aria-describedby="helpId" 
+                value="{{date_start|date:"Y-m-d"}}T{{date_start|time:"H:i"}}"
+                required
+            >
+        </div>
+        <div class="form-group">
+            <label for="To">To:</label>
+            <input type="datetime-local"
+                class="form-control" 
+                name="date_end" 
+                id="To" 
+                aria-describedby="helpId" 
+                value="{{date_end|date:"Y-m-d"}}T{{date_end|time:"H:i"}}"
+                required
+            >
+        </div>
+        <button type="submit" class="btn btn-primary not-print">Refresh</button>
+    </form>
+{% endblock %}
+{% block content %}
+<div class="">
+    {% for ordered in ordereds %}
+    <div class="card">
+        <div class="card-header">
+            Receipt #: {{ordered.id}}
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Article</th>
+                        <th>Unit (gourdes)</th>
+                        <th>Qty</th>
+                        <th>Total (gourdes)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dinkLine in ordered.drinkorderedline_set.all %}
+                        <tr>
+                            <td>{{dinkLine.drink.name}}</td>
+                            <td>{{dinkLine.drink.sale_price}}</td>
+                            <td>{{dinkLine.quantity}}</td>
+                            <td>{{dinkLine.total_price}}</td>
+                        </tr>
+                    {% endfor %}
+                    {% for mealLine in ordered.mealorderedline_set.all %}
+                        <tr>
+                            <td>{{mealLine.meal.name}}</td>
+                            <td>{{mealLine.meal.sale_price}}</td>
+                            <td>{{mealLine.quantity}}</td>
+                            <td>{{mealLine.total_price}}</td>
+                        </tr>
+                    {% endfor %}
+                    {% for washLine in ordered.washorderedline_set.all %}
+                        <tr>
+                            <td>{{washLine.wash.type}}</td>
+                            <td>{{washLine.wash.wash_price}}</td>
+                            <td>{{washLine.quantity}}</td>
+                            <td>{{washLine.total_price}}</td>
+                        </tr>
+                    {% endfor %}
+                    {% for roomLine in ordered.roomorderedline_set.all %}
+                        <tr>
+                            <td>{{roomLine.room.number}}{% if roomLine.is_night %}(night){% endif %}</td>
+                            <td>{% if roomLine.is_night %}{{roomLine.room.night_price}}{% else %}{{roomLine.room.loan_price}}{% endif %}</td>
+                            <td>{{roomLine.quantity}}</td>
+                            <td>{{roomLine.total_price}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            Total Sales (gourdes): {{ordered.total_price}}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

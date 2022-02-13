@@ -17,12 +17,13 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import path
-from ordered.views import sale_view,sale_line,sale_print
+from ordered.views import sale_report, sale_view,sale_line,sale_print
 
 urlpatterns = [
     path('',sale_view,name="sale_view"),
     path('sale_line/',sale_line,name="sale_line"),
     path('sale_print/<id>',sale_print,name="sale_print"),
+    path('sale_report',sale_report,name="sale_report"),
     path('admin/', admin.site.urls),
 ]
 

@@ -1,3 +1,4 @@
+from datetime import datetime,timedelta
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from .models import RoomOrderedLine, DrinkOrderedLine, MealOrderedLine, WashOrderedLine, Ordered,Drink,Meal,Wash,Room
@@ -120,3 +121,38 @@ def sale_print(request,id):
         ordered.save()
         
     return render(request,"ordered/receipt.html",{"ordered":ordered})
+
+@login_required()
+def sale_report(request):
+    
+    date_start  = request.GET.get("date_start",datetime.now() - timedelta(1))
+    date_end    = request.GET.get("date_end",datetime.now())
+    
+    if type(date_start) == str:
+        date_start = datetime.strptime(date_start,'%Y-%m-%dT%H:%M')
+    
+    if type(date_end) == str:
+        date_end = datetime.strptime(date_end,'%Y-%m-%dT%H:%M')
+    
+    total_sales = 0
+    
+    try:
+        ordereds = Ordered.objects.all().filter(
+            restaurant=request.user.restaurant,
+            updated_at__gte=date_start,
+            updated_at__lte=date_end
+        )
+        
+        for ordered in ordereds:
+            total_sales += ordered.total_price
+            
+    except :
+        ordereds = None
+        
+    return render(request,"ordered/report.html",{
+        "ordereds":ordereds,
+        "total_sales":total_sales,
+        "date_end":date_end,
+        "date_start":date_start,
+        "restaurant":request.user.restaurant
+    })

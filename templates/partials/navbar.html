@@ -5,11 +5,14 @@
     <span class="navbar-toggler-icon"></span>
   </button> {% endcomment %}
   <span class="text-white m-auto">
-   {% if user.is_authenticated %}
-        {{user.username}}
+    {% if user.is_authenticated %}
+      {{user.username}}
     {% endif %}
-     {% if user.is_staff %}
+    {% if user.is_staff %}
       / <a href="{% url 'admin:index' %}"> Administrateur</a>
     {% endif %}
+  </span>   
+  <span class="text-white ms-auto pe-3">
+    <a href="{% url 'sale_report' %}">Generate report</a>
   </span>   
 </header>
