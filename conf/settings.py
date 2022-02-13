@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django_admin_generator',
     'crispy_forms',
     'import_export',
+    'csvimport.app.CSVImportConf',
 
     'drink',
     'employe',
